@@ -386,12 +386,44 @@ function goBack() {
   if (cur > 0) { cur--; renderQ(); }
 }
 
-var FLODESK_API_KEY = 'fd_key_821377b5eaf448999748fc961e4e940b.OmFo0SFWi6TOH8CLDfDNUCxBe3ckehQpktZA46x1R5SvrO6iUfUIrwHdgkPUfIMhSj7KMxZLid5oo0DKEriJN41aWaTMHhlDF5LZRnBAzjXOrnfFTPP49dG0L8iyqQQCGpqLgaoxBwbAFBc7KZxB7ZkzhxYBTzzWokY1Uf8bcSNXPhedr2PmHfEf0kbXuc5P';
-var FLODESK_SEGMENTS = {
+var FLODESK_FORM_IDS = {
   0: '69c48eef875ed4130d230264',
   1: '69c48ecdca8d0342d892ad99',
   2: '69c48e83e4c7a4c2abf379b1'
 };
+
+function submitToFlodesk(formId, email, firstName) {
+  return new Promise(function(resolve) {
+    var containerId = 'fd-hidden-' + formId;
+    var existing = document.getElementById(containerId);
+    if (existing) existing.remove();
+
+    var div = document.createElement('div');
+    div.id = containerId;
+    div.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;';
+    document.body.appendChild(div);
+
+    window.fd('form', {
+      formId: formId,
+      containerEl: '#' + containerId,
+      onSubmitSuccess: function() { resolve(); }
+    });
+
+    setTimeout(function() {
+      var emailInput = div.querySelector('input[type="email"]');
+      var nameInput = div.querySelector('input[name="first_name"]');
+      var submitBtn = div.querySelector('button[type="submit"]');
+      if (emailInput) emailInput.value = email;
+      if (nameInput) nameInput.value = firstName;
+      if (submitBtn) {
+        submitBtn.click();
+        setTimeout(resolve, 1000);
+      } else {
+        resolve();
+      }
+    }, 1200);
+  });
+}
 
 function submitEmail() {
   var name = document.getElementById('fname').value.trim();
@@ -414,25 +446,12 @@ function submitEmail() {
     if (scores[t] > scores[top]) top = t;
   }
 
-  var segmentId = FLODESK_SEGMENTS[top];
+  var formId = FLODESK_FORM_IDS[top];
   var firstName = name ? name.split(' ')[0] : '';
-  var lastName = name && name.split(' ').length > 1 ? name.split(' ').slice(1).join(' ') : '';
 
-  fetch('https://api.flodesk.com/v1/subscribers', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + btoa(FLODESK_API_KEY + ':')
-    },
-    body: JSON.stringify({
-      email: email,
-      first_name: firstName,
-      last_name: lastName,
-      segments: [segmentId]
-    })
-  })
-  .then(function() { calcResults(name, top); })
-  .catch(function() { calcResults(name, top); });
+  submitToFlodesk(formId, email, firstName)
+    .then(function() { calcResults(name, top); })
+    .catch(function() { calcResults(name, top); });
 }
 
 function calcResults(name, top) {
