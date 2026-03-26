@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nervous System Assessment — Kailani Raye</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #000000;
+  --charcoal: #4A4A4A;
+  --crimson: #980c07;
+  --sand-gold: #d6c499;
+  --olive-gold: #b0a661;
+  --deep-gold: #b09c3d;
+  --sage-light: #e3f1c7;
+  --cream: #fffef4;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--charcoal); }
+.wrap { max-width: 640px; margin: 0 auto; padding: 64px 28px 100px; }
+.page { display: none; }
+.page.on { display: block; }
+
+.eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep-gold); margin-bottom: 28px; }
+h1 { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia, serif; font-size: 38px; font-weight: 400; line-height: 1.2; margin-bottom: 20px; color: var(--black); letter-spacing: -0.01em; }
+h2 { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 400; line-height: 1.3; margin-bottom: 18px; color: var(--black); }
+.sub { font-size: 15px; font-weight: 300; color: var(--charcoal); line-height: 1.85; margin-bottom: 14px; }
+.big-btn { display: inline-block; margin-top: 32px; padding: 15px 44px; background: var(--black); color: var(--cream); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; border: none; cursor: pointer; }
+.big-btn:hover { background: var(--charcoal); }
+
+.prog-track { height: 1px; background: var(--sand-gold); margin-bottom: 40px; opacity: 0.4; }
+.prog-fill { height: 1px; background: var(--deep-gold); transition: width 0.4s ease; }
+.q-num { font-size: 11px; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--olive-gold); margin-bottom: 16px; }
+.q-text { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 400; line-height: 1.5; margin-bottom: 32px; color: var(--black); }
+.option { display: block; width: 100%; text-align: left; padding: 18px 22px; margin-bottom: 10px; border: 1px solid rgba(214,196,153,0.6); background: var(--cream); font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; color: var(--charcoal); line-height: 1.6; cursor: pointer; transition: all 0.15s; }
+.option:hover { border-color: var(--olive-gold); background: #fdfcef; color: var(--black); }
+.option.picked { border-color: var(--crimson) !important; background: #fdf7f7 !important; color: var(--black) !important; font-weight: 400; }
+.nav { display: flex; justify-content: space-between; margin-top: 32px; }
+.nav-btn { padding: 12px 28px; border: 1px solid var(--sand-gold); background: transparent; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; color: var(--charcoal); transition: all 0.15s; }
+.nav-btn:hover { border-color: var(--charcoal); color: var(--black); }
+.nav-btn.go { background: var(--black); color: var(--cream); border-color: var(--black); }
+.nav-btn.go:hover { background: var(--charcoal); border-color: var(--charcoal); }
+.nav-btn:disabled { opacity: 0.22; cursor: default; }
+
+.field { display: block; width: 100%; padding: 14px 16px; border: 1px solid rgba(214,196,153,0.7); font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; color: var(--black); margin-bottom: 12px; background: var(--cream); transition: border-color 0.15s; }
+.field:focus { outline: none; border-color: var(--deep-gold); }
+.field::placeholder { color: var(--sand-gold); }
+.full-btn { display: block; width: 100%; padding: 16px; background: var(--black); color: var(--cream); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; border: none; cursor: pointer; transition: background 0.2s; }
+.full-btn:hover { background: var(--charcoal); }
+.note { font-size: 12px; font-weight: 300; color: var(--olive-gold); margin-top: 12px; line-height: 1.6; }
+
+.r-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep-gold); margin-bottom: 10px; }
+.r-greeting { font-size: 13px; font-weight: 300; color: var(--olive-gold); margin-bottom: 18px; letter-spacing: 0.04em; font-style: italic; }
+.r-name { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia, serif; font-size: 42px; font-weight: 400; line-height: 1.1; margin-bottom: 12px; color: var(--black); letter-spacing: -0.02em; }
+.r-tagline { font-size: 15px; font-weight: 300; font-style: italic; color: var(--charcoal); margin-bottom: 28px; line-height: 1.75; }
+.r-intro { font-size: 15px; font-weight: 300; color: var(--charcoal); line-height: 1.95; }
+
+.line { height: 1px; background: var(--sand-gold); opacity: 0.35; margin: 44px 0; }
+
+.deep-section { margin-bottom: 36px; }
+.deep-label { font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep-gold); margin-bottom: 18px; }
+.deep-body { font-size: 15px; font-weight: 300; color: var(--charcoal); line-height: 1.95; }
+.deep-body p { margin-bottom: 16px; }
+.deep-body p:last-child { margin-bottom: 0; }
+
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0 8px; }
+.pillar { padding: 22px 14px; border: 1px solid rgba(214,196,153,0.5); text-align: center; background: var(--cream); }
+.p-area { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.16em; color: var(--deep-gold); margin-bottom: 9px; }
+.p-state { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia, serif; font-size: 13px; font-weight: 400; color: var(--black); line-height: 1.35; }
+.p-detail { font-size: 11px; font-weight: 300; color: var(--olive-gold); margin-top: 7px; line-height: 1.5; }
+
+.steps-list { list-style: none; margin: 18px 0 0; }
+.steps-list li { display: flex; gap: 20px; padding: 18px 0; border-bottom: 1px solid rgba(214,196,153,0.25); font-size: 14px; font-weight: 300; color: var(--charcoal); line-height: 1.75; }
+.steps-list li:last-child { border-bottom: none; }
+.step-num { font-size: 11px; font-weight: 500; color: var(--crimson); letter-spacing: 0.06em; min-width: 26px; padding-top: 2px; flex-shrink: 0; }
+
+.truth-box { background: var(--black); padding: 32px 36px; margin: 32px 0; }
+.truth-text { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia, serif; font-size: 19px; font-weight: 400; font-style: italic; color: var(--sand-gold); line-height: 1.8; }
+
+.offer-box { border: 1px solid rgba(214,196,153,0.6); padding: 32px; margin-top: 8px; background: var(--cream); }
+.o-tag { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--deep-gold); margin-bottom: 12px; }
+.o-title { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia, serif; font-size: 22px; font-weight: 400; margin-bottom: 12px; line-height: 1.3; color: var(--black); }
+.o-desc { font-size: 14px; font-weight: 300; color: var(--charcoal); line-height: 1.85; margin-bottom: 20px; }
+.o-what { font-size: 13px; font-weight: 300; color: var(--olive-gold); line-height: 1.7; margin-bottom: 24px; }
+.o-what span { display: block; padding: 7px 0; border-bottom: 1px solid rgba(214,196,153,0.25); }
+.o-what span:last-child { border-bottom: none; }
+.o-btn { padding: 13px 32px; background: var(--crimson); color: var(--cream); border: none; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.o-btn:hover { background: #7a0905; }
+.o-btn-secondary { padding: 13px 32px; background: transparent; color: var(--black); border: 1px solid var(--sand-gold); font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+.o-btn-secondary:hover { border-color: var(--charcoal); }
+.o-upsell { margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(214,196,153,0.3); }
+.o-upsell-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.18em; color: var(--olive-gold); margin-bottom: 10px; }
+.o-upsell-title { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia, serif; font-size: 17px; font-weight: 400; margin-bottom: 8px; color: var(--black); }
+.o-upsell-desc { font-size: 13px; font-weight: 300; color: var(--charcoal); line-height: 1.75; margin-bottom: 14px; }
+.o-note { font-size: 12px; font-weight: 300; font-style: italic; color: var(--olive-gold); margin-top: 18px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="p-intro" class="page on">
+  <div style="text-align:center;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid rgba(214,196,153,0.3);">
+  <p style="font-family:'Didot','GFS Didot','Bodoni MT','Playfair Display',Georgia,serif;font-size:24px;font-weight:400;letter-spacing:0.18em;color:#000000;margin:0 0 12px;">kailani raye / co.</p>
+  <p style="font-family:'Jost',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:#b09c3d;margin:0;">Nervous System Assessment</p>
+</div>
+  <h1>Your nervous system is already telling you something.</h1>
+  <p class="sub">Most women spend years trying to think their way into a better life — better love, more money, stronger leadership. But the body has already decided what it will and will not hold.</p>
+  <p class="sub">This assessment reveals which nervous system state is quietly running your life — and what it's costing your capacity to receive what you say you want.</p>
+  <p class="sub" style="color:var(--sand-gold);font-size:13px;letter-spacing:0.06em;">10 questions &nbsp;&middot;&nbsp; 5 minutes &nbsp;&middot;&nbsp; Honest results</p>
+  <button class="big-btn" onclick="startQ()">Begin the assessment</button>
+</div>
+
+<div id="p-questions" class="page">
+  <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+  <p class="q-num" id="qnum">Question 1 of 10</p>
+  <p class="q-text" id="qtext"></p>
+  <div id="opts"></div>
+  <div class="nav">
+    <button class="nav-btn" id="backbtn" onclick="goBack()">Back</button>
+    <button class="nav-btn go" id="nextbtn" onclick="goNext()" disabled>Continue</button>
+  </div>
+</div>
+
+<div id="p-email" class="page">
+  <p class="eyebrow">One last step</p>
+  <h2>Where should we send your results?</h2>
+  <p class="sub" style="margin-bottom:28px;">Your full results include a deep breakdown of your nervous system pattern, how it's shaping love, money, and leadership, and a clear path forward — sent straight to your inbox.</p>
+  <input class="field" id="fname" type="text" placeholder="First name" />
+  <input class="field" id="femail" type="email" placeholder="Email address" />
+  <button class="full-btn" onclick="submitEmail()">Show me my results</button>
+  <p class="note">Your information is safe. No spam — only what serves you.</p>
+</div>
+
+<div id="p-results" class="page">
+  <p style="font-family:'Didot','GFS Didot','Bodoni MT','Playfair Display',Georgia,serif;font-size:18px;font-weight:400;letter-spacing:0.16em;color:#000000;margin:0 0 20px;display:block;">kailani raye / co.</p>
+  <p class="r-greeting" id="r-greeting"></p>
+  <h2 class="r-name" id="rname"></h2>
+  <p class="r-tagline" id="rtagline"></p>
+  <p class="r-intro" id="rintro"></p>
+  <div class="line"></div>
+  <div class="deep-section">
+    <p class="deep-label">Where this pattern comes from</p>
+    <div class="deep-body" id="r-origin"></div>
+  </div>
+  <div class="deep-section">
+    <p class="deep-label">How it's showing up — love, money, leadership</p>
+    <div class="pillars" id="rpillars"></div>
+    <div class="deep-body" id="r-pillarbody" style="margin-top:22px;"></div>
+  </div>
+  <div class="truth-box">
+    <p class="truth-text" id="rquote"></p>
+  </div>
+  <div class="deep-section">
+    <p class="deep-label">What it's costing you</p>
+    <div class="deep-body" id="r-cost"></div>
+  </div>
+  <div class="deep-section">
+    <p class="deep-label">The path forward</p>
+    <div class="deep-body" id="r-path-intro"></div>
+    <ul class="steps-list" id="r-steps"></ul>
+  </div>
+  <div class="line"></div>
+  <p class="deep-label">Your next step</p>
+  <div class="offer-box" id="roffer"></div>
+</div>
+
+</div>
+<script>
+var questions = [
+  { t: "When something feels uncertain in a relationship, your first instinct is to —", o: [
+    { t: "Pull back and wait to see what happens", s: [3,0,0] },
+    { t: "Reach out, check in, try to fix the feeling", s: [0,3,0] },
+    { t: "Sit with the discomfort — you know it will pass", s: [0,0,3] },
+    { t: "Tell yourself it's fine when it doesn't feel fine", s: [1,1,0] }
+  ]},
+  { t: "When money gets tight or inconsistent, your body —", o: [
+    { t: "Braces. You go into control mode and shut everything down", s: [3,0,0] },
+    { t: "Panics. You feel unsafe and start scanning for solutions fast", s: [0,3,0] },
+    { t: "Notices the stress but stays grounded enough to think clearly", s: [0,0,3] },
+    { t: "Shuts down. You avoid looking at numbers altogether", s: [1,1,0] }
+  ]},
+  { t: "When you are close to a breakthrough — a new level, a bigger opportunity — you tend to —", o: [
+    { t: "Slow down. Something in you finds a reason to pause or pull back", s: [3,0,0] },
+    { t: "Rush toward it and then feel overwhelmed when it arrives", s: [0,3,0] },
+    { t: "Feel the nerves and move forward anyway — expansion is familiar now", s: [0,0,3] },
+    { t: "Self-sabotage in ways you don't fully understand until later", s: [1,1,0] }
+  ]},
+  { t: "In your leadership, the pattern that shows up most often is —", o: [
+    { t: "Holding back what you know because you haven't been asked", s: [3,0,0] },
+    { t: "Overgiving until depleted, then pulling back completely", s: [0,3,0] },
+    { t: "Leading clearly but still hesitating to be fully seen before you feel ready", s: [0,0,3] },
+    { t: "Showing up consistently without needing external validation", s: [0,0,3] }
+  ]},
+  { t: "The honest truth about how you receive love is —", o: [
+    { t: "You crave it deeply but distrust it when it actually arrives", s: [3,0,0] },
+    { t: "You need ongoing reassurance that it's still there", s: [0,3,0] },
+    { t: "You can receive it but still catch yourself bracing for it to disappear", s: [0,0,3] },
+    { t: "You receive it with relative ease and you don't need to earn it", s: [0,0,3] }
+  ]},
+  { t: "When you think about charging more or being visible at a higher level —", o: [
+    { t: "Your body tightens. Something says: who am I to ask for that?", s: [3,0,0] },
+    { t: "You feel excited and then immediately wait for it to fall apart", s: [0,3,0] },
+    { t: "You feel ready in theory but keep refining instead of actually releasing", s: [0,0,3] },
+    { t: "You feel anchored. Your worth is not up for negotiation", s: [0,0,3] }
+  ]},
+  { t: "The emotion most present when you think about the life you're building is —", o: [
+    { t: "Longing. You can see it clearly but it doesn't feel accessible yet", s: [3,0,0] },
+    { t: "Anxiety. You're afraid it will be taken once you have it", s: [0,3,0] },
+    { t: "Determination mixed with tension — building through the resistance", s: [0,0,3] },
+    { t: "Groundedness. You trust the process even in the slow seasons", s: [0,0,3] }
+  ]},
+  { t: "When silence happens in a relationship — a slow response, a quiet season — you —", o: [
+    { t: "Go cold and withdraw before anything has actually happened", s: [3,0,0] },
+    { t: "Interpret it as a sign something is wrong and start scanning", s: [0,3,0] },
+    { t: "Notice the discomfort but don't let it write a story without evidence", s: [0,0,3] },
+    { t: "Fill the silence with busyness so you don't have to feel it", s: [1,1,0] }
+  ]},
+  { t: "Your relationship with rest and receiving is —", o: [
+    { t: "Hard. You don't feel safe unless you're actively producing something", s: [3,0,0] },
+    { t: "Complicated. You rest but feel guilty or anxious the entire time", s: [0,3,0] },
+    { t: "Improving. You're actively learning that stillness is not stagnation", s: [0,0,3] },
+    { t: "Natural. You receive without guilt — what's yours is yours", s: [0,0,3] }
+  ]},
+  { t: "The deepest truth about what you believe you deserve —", o: [
+    { t: "I want to believe I'm worthy, but my body still acts like I have to earn it", s: [3,0,0] },
+    { t: "I believe I deserve it, but I'm terrified it will be taken once I have it", s: [0,3,0] },
+    { t: "I know I deserve it. My work now is learning to receive it without bracing", s: [0,0,3] },
+    { t: "I am settled in my worth. My nervous system is catching up to what I already know", s: [0,0,3] }
+  ]}
+];
+
+var results = [
+  {
+    name: "Frozen capacity",
+    tagline: "Your body learned that stillness was the safest response to an unsafe world.",
+    intro: "You are not stuck because you lack ambition. You are not held back because you don't want it badly enough. Your nervous system made a very intelligent decision — probably early in life — that the safest way to survive uncertainty was to become still. To shrink. To wait. What once protected you is now the very thing limiting your capacity to receive love, money, and recognition at the level you are actually built for.",
+    origin: "<p>Freeze responses don't come from weakness. They come from a nervous system that learned — often in childhood, often through emotional unavailability, abandonment, or unpredictability — that expressing needs created more pain than suppressing them.</p><p>When a child reaches for connection and is met with inconsistency, the nervous system learns to stop reaching. When emotional expression was unsafe or punished, the nervous system learns to go quiet. Over time, this becomes the default setting: hold back, don't ask, don't take up too much space, don't want too loudly — because wanting and not receiving hurts more than never trying.</p><p>That wiring doesn't disappear when you become an adult. It simply transfers. Now it shows up as the inability to charge what you're worth, the pull to disappear before something gets taken away, the pattern of shrinking just when you're about to expand.</p>",
+    pillars: [
+      { a: "Love", s: "Held at distance", d: "You protect yourself by staying slightly unreachable" },
+      { a: "Money", s: "Controlled tightly", d: "Financial abundance feels unsafe to hold or show" },
+      { a: "Leadership", s: "Waiting to be chosen", d: "You know more than you say until someone asks" }
+    ],
+    pillarbody: "<p>In love, your freeze response looks like emotional unavailability — not because you don't feel deeply, but because you've learned that being fully seen creates vulnerability to pain. You may keep one foot out the door even in the relationships you most want to be fully in.</p><p>In money, freeze manifests as control — tight spending, avoidance of financial risk, difficulty charging premium prices, and an unconscious ceiling on what feels safe to receive. Your body equates financial expansion with instability, even when your theology says otherwise.</p><p>In leadership, you are likely more gifted than anyone around you knows — because you haven't fully released what you carry. You hold back insights, delay visibility, and wait to be recognized before you fully show up. The invitation you're waiting for is already inside you.</p>",
+    quote: "You are not playing small because you don't believe in yourself. You are playing small because your body hasn't yet learned that expanding is safe.",
+    cost: "<p>The cost of a freeze pattern isn't dramatic — it's quiet. It's the opportunity you almost took. The offer you didn't send. The price you lowered before anyone even pushed back. The relationship you kept at arm's length until it eventually drifted away.</p><p>It's the chronic exhaustion of managing a life that is smaller than your capacity, and the particular grief of knowing — in your most honest moments — that you are built for more than this. Not more hustle. More openness. More reception. More permission to actually have what you've been building toward.</p><p>The most significant cost is this: you cannot receive what your body is bracing against. Every version of the life you want — the love, the income, the impact — requires your nervous system to feel safe enough to let it land.</p>",
+    pathIntro: "<p>The work is not about pushing harder or believing more. You don't have a mindset problem. You have a safety problem. Your nervous system needs new evidence that expansion does not lead to loss — and that evidence is built slowly, through embodied experience, not affirmations.</p><p>Here is where the work begins:</p>",
+    steps: [
+      { n: "01", t: "Learn to distinguish between instinct and pattern. Not every impulse to pull back is wisdom. Some of it is old wiring. The work begins with learning to tell the difference — in your body, not just your mind." },
+      { n: "02", t: "Begin titrating exposure to visibility and receiving. Your nervous system cannot leap from freeze to full expansion. It needs small, consistent experiences of reaching out and not being punished for it. Each safe experience builds new evidence." },
+      { n: "03", t: "Identify your freeze triggers specifically — in love, in money, in leadership. The pattern has a pattern. When you know what activates it, you can interrupt it before it collapses your capacity." },
+      { n: "04", t: "Replace the subconscious contract. Somewhere in your nervous system is a belief that says: staying small keeps me safe. That contract needs to be renegotiated — not through willpower, but through regulation, repetition, and identity work." },
+      { n: "05", t: "Ground the expansion in faith. For you, this work cannot be secular. Your nervous system needs to know that God is holding what you're releasing control over. Obedience to your calling is also an act of nervous system healing." }
+    ],
+    offer: {
+      tag: "Designed for exactly where you are",
+      title: "Rooted — a free nervous system audio reset",
+      desc: "Rooted is a short audio experience created specifically for the woman whose nervous system has learned to play small. It's not a pep talk. It's not a meditation. It is a structured introduction to what it feels like to be in your body without bracing — and to begin building the internal safety that expansion requires.",
+      what: ["A guided nervous system reset rooted in somatic awareness and faith", "Language to begin identifying your freeze triggers in real time", "A first experience of receiving without performance or justification"],
+      cta: "Access Rooted — free",
+      url: "https://www.kailaniraye.co",
+      note: "This is the beginning of the work, not a substitute for it. If you feel yourself in these words, Rooted is where we start."
+    }
+  },
+  {
+    name: "Activated survival",
+    tagline: "Your nervous system learned that staying ahead of danger was the only way to feel safe.",
+    intro: "You are not anxious because something is wrong with you. You are not needy, too much, or broken. Your nervous system made a brilliant adaptation — probably when you were young and love was inconsistent, or when the ground kept shifting beneath you — and decided that the safest strategy was to stay alert. To scan. To move fast enough that loss could never catch you. What protected you then is exhausting you now.",
+    origin: "<p>Hyperactivated nervous systems are most often shaped in environments where emotional safety was unpredictable. A parent who was warm one moment and withdrawn the next. A home where financial stability came and went. Love that felt conditional on performance, behavior, or who you were on a given day.</p><p>When a child cannot predict whether their needs will be met, the nervous system responds by staying on high alert — constantly scanning for cues, reading the room, trying to anticipate what's coming before it arrives. This is called anxious or hyperactivated attachment, and it doesn't disappear in adulthood. It transfers.</p><p>Now it looks like monitoring text responses for tone shifts. Interpreting a quiet season in revenue as the beginning of collapse. Overextending in relationships and leadership because the fear of not being enough is louder than the fatigue. Moving fast not because you're motivated — but because stillness feels like waiting for something to go wrong.</p>",
+    pillars: [
+      { a: "Love", s: "Scanning for threat", d: "Silence reads as withdrawal; uncertainty reads as abandonment" },
+      { a: "Money", s: "Chasing security", d: "Income fluctuation activates worth narratives, not just finance" },
+      { a: "Leadership", s: "Overextending", d: "Giving more than necessary to prevent being seen as not enough" }
+    ],
+    pillarbody: "<p>In love, your activated nervous system reads neutral information as negative. A slow response is abandonment. A quiet day is distance. A shift in energy is a sign that something is wrong. You are not imagining these things — you are feeling them. But your nervous system is filtering current reality through the lens of past wounding, and they are not the same story.</p><p>In money, the activation is subtle but structural. When income dips, it doesn't just feel like a financial problem — it feels like confirmation that you are not enough, not capable, not chosen. This is why revenue fluctuations hit deeper than they should. Your worth and your income share a nervous system, and until that wiring is separated, financial stability will remain emotionally charged.</p><p>In leadership, you likely give more than is required, move faster than is sustainable, and struggle to rest inside seasons of slow growth. Your leadership is real and powerful — but it is being driven partly by the fear of being seen as not enough, not just by calling.</p>",
+    quote: "You are not too much. You are a woman running a survival strategy that was never designed to be permanent.",
+    cost: "<p>The cost of an activated nervous system is sustainability. You can perform at a high level — often an extraordinarily high level — but you cannot sustain it, because the fuel source is fear, not capacity. The crash always comes.</p><p>In relationships, the cost is the push-pull dynamic it creates. Your need for reassurance — even when unconscious — can exhaust the people you most want to draw close. The very intensity of your love can make it harder for others to stay present with you, not because you're unlovable, but because your nervous system is asking them to regulate you in ways only you can do for yourself.</p><p>In business, the cost is the ceiling. You will build to a certain level and then unconsciously self-destruct, because your body doesn't yet know how to hold success without anticipating its disappearance. The income goal is not just a strategy problem. It is a capacity problem.</p>",
+    pathIntro: "<p>The work is regulation — not relaxation. There is a difference. Relaxation is temporary relief. Regulation is a permanent shift in your baseline nervous system state. It requires consistent, embodied practice, and it is entirely possible.</p><p>Here is where the work begins:</p>",
+    steps: [
+      { n: "01", t: "Learn the difference between your nervous system speaking and reality speaking. Your body will always generate a story. The practice is learning to pause long enough to ask: is this true right now, or is this old information presenting itself as current threat?" },
+      { n: "02", t: "Build a regulation practice that works specifically for your pattern. Hyperactivated nervous systems need practices that slow the system down — breathwork, somatic grounding, stillness. Not more processing. More settling." },
+      { n: "03", t: "Separate worth from outcome. Your income, your enrollment numbers, his response time — none of these are measurements of your value. The work is creating enough internal stability that your worth is not recalculated every time an external metric shifts." },
+      { n: "04", t: "Practice receiving without immediately reciprocating or justifying. Your nervous system is wired to earn everything. Begin practicing the experience of receiving — rest, compliments, support, money — without immediately working to deserve it." },
+      { n: "05", t: "Let God hold what your nervous system is trying to manage. The exhaustion of hyperactivation is often the exhaustion of trying to control outcomes that were never yours to control. Surrender here is not passivity — it is the most active form of faith." }
+    ],
+    offer: {
+      tag: "Designed for exactly where you are",
+      title: "Foundations — 7-day nervous system reset",
+      desc: "Foundations is a structured 7-day audio reset built for the woman whose nervous system is running on activated survival. It does not give you more information to process. It gives your body a different experience to move through — one that begins building the internal regulation your life has been asking for.",
+      what: ["7 days of structured audio guidance — one focused practice per day", "Somatic and faith-rooted tools for interrupting the hyperactivation cycle", "A framework for separating worth from outcome across love, money, and leadership", "Language for what is happening in your body — so you can work with it, not against it"],
+      cta: "Begin Foundations — $147",
+      url: "https://www.kailaniraye.co",
+      note: "This is not a quick fix. It is a reset. Seven days of intentional work will not undo years of wiring — but it will give your nervous system its first real taste of what regulation feels like. And that changes everything."
+    }
+  },
+  {
+    name: "Expanding capacity",
+    tagline: "You've done enough work to know yourself. Now the work is learning to hold what you've built.",
+    intro: "You are in the most nuanced and in many ways the most demanding season of growth. You are no longer completely ruled by your patterns — you can see them, name them, work with them. But you are not yet living fully from your healed identity either. You exist in the tension between who you were and who you are becoming, and that tension is real, and it is purposeful. This is not a problem to solve. This is the work itself.",
+    origin: "<p>Women in expanding capacity have usually done significant personal work — therapy, coaching, spiritual formation, self-study. You have language for your patterns. You understand attachment theory, nervous system regulation, identity psychology, at least in concept. But knowledge and embodiment are not the same thing.</p><p>The patterns that remain are not from lack of awareness. They are the last layers — the ones that live deepest in the body, that activate in the moments of highest stakes: right before a breakthrough, in the middle of intimacy, in the season just before the next level arrives. These are not signs that the work hasn't worked. They are signs that you are close.</p><p>The challenge of this season is that it requires you to expand before you feel fully ready, to be seen before you feel fully healed, and to trust the process even when the evidence is still catching up to the calling.</p>",
+    pillars: [
+      { a: "Love", s: "Opening slowly", d: "Receiving is becoming more natural — but bracing still fires in deep intimacy" },
+      { a: "Money", s: "Building trust", d: "Financial capacity is expanding, but worth narratives still surface at new levels" },
+      { a: "Leadership", s: "Emerging clearly", d: "Your voice is stronger — and the resistance to full visibility remains" }
+    ],
+    pillarbody: "<p>In love, you are learning — genuinely learning — how to stay present without bracing. You can receive more than you used to. You are choosing better. But in the moments of deepest vulnerability, the old wiring still fires. The question is no longer whether you can love well. It is whether you can let yourself be fully loved without managing the experience.</p><p>In money, your relationship with financial capacity is maturing. You are charging more, asking for more, receiving more. But there is a ceiling that keeps appearing — a number, a level, a type of client or opportunity — where your nervous system still hesitates. This is where identity work becomes wealth work. The container has to expand before the income can.</p><p>In leadership, you have a voice and you are using it. What remains is the resistance to full visibility — the pattern of refining one more time before releasing, staying slightly behind the curtain, waiting for one more credential or confirmation before fully stepping forward. Your authority is not in the future. It is already in you.</p>",
+    quote: "The work is not becoming someone new. The work is learning to inhabit — fully, without apology — the woman you have already become.",
+    cost: "<p>The cost of staying in the in-between is subtle because you are functional, often highly functional. You are producing, showing up, building. But there is a quiet tax being paid on everything — the energy spent managing the gap between who you know yourself to be and how fully you're allowing that to be seen.</p><p>The cost is in the containers you're not yet offering. The prices you're not yet charging. The relationships you're holding at 85% intimacy because 100% still feels like too much risk. The leadership you're giving from a slightly protected place instead of from your full authority.</p><p>You are close. That proximity to the next level is exactly why this season costs what it costs. The threshold between where you are and where you're going is where the most resistance lives — and where the most significant work remains.</p>",
+    pathIntro: "<p>The work at this stage is integration — bringing the mind's knowledge into the body's experience. You do not need more information. You need consistent, structured containers where your identity at the next level is practiced, not just understood.</p><p>Here is where the work continues:</p>",
+    steps: [
+      { n: "01", t: "Stop waiting to feel ready before being fully visible. Readiness at this level is not a feeling that precedes action — it is a feeling that follows it. The woman you are becoming is built in the doing, not perfected before it." },
+      { n: "02", t: "Identify your specific upper-limit patterns. When you approach a new level — in money, visibility, or intimacy — notice what fires. What story activates? What behavior follows? This is your upper-limit pattern, and naming it is the first step to interrupting it." },
+      { n: "03", t: "Practice receiving at the level you're building toward, not the level you're at. Your nervous system calibrates to what it practices. Begin receiving — compliments, payment, love, recognition — at the level of the identity you are stepping into." },
+      { n: "04", t: "Let your containers match your capacity. If you are expanding capacity, you need to be in a room with women who are building at that level. Isolation at the expansion edge is one of the most common reasons women stall here." },
+      { n: "05", t: "Anchor the expansion in spiritual obedience, not performance. The call on your life is not something you earned — it is something you were given. At this stage, showing up fully is not ambition. It is stewardship." }
+    ],
+    offer: {
+      tag: "Designed for exactly where you are",
+      title: "Foundations — 7-day nervous system reset",
+      desc: "You've done the awareness work. Foundations takes you into the body work — a structured 7-day audio reset that moves you from knowing your patterns to actually interrupting them. This is where the integration begins.",
+      what: ["7 days of structured audio guidance — one focused practice per day", "Somatic and faith-rooted tools for the specific tension of the expansion season", "Practices for receiving at the level you're building toward, not the level you're at", "A framework for closing the gap between who you know yourself to be and how fully you're living it"],
+      cta: "Begin Foundations — $147",
+      url: "https://www.kailaniraye.co",
+      upsellTitle: "Also recommended: The Upper Room journal",
+      upsellDesc: "A structured Bible study journal for the woman doing the daily identity and faith work. Pairs directly with Foundations as a written companion to the audio work.",
+      upsellCta: "Add The Upper Room — $33",
+      upsellUrl: "https://www.kailaniraye.co",
+      note: "Most women in this season find that Foundations shifts something that months of mindset work couldn't touch. The Upper Room deepens what the reset opens."
+    }
+  }
+];
+
+var cur = 0;
+var answers = [];
+
+function showPage(id) {
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('on');
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function startQ() {
+  cur = 0; answers = [];
+  showPage('p-questions');
+  renderQ();
+}
+
+function renderQ() {
+  var q = questions[cur];
+  document.getElementById('qnum').textContent = 'Question ' + (cur+1) + ' of ' + questions.length;
+  document.getElementById('qtext').textContent = q.t;
+  document.getElementById('prog').style.width = Math.round((cur / questions.length) * 100) + '%';
+  document.getElementById('backbtn').style.visibility = cur === 0 ? 'hidden' : 'visible';
+  document.getElementById('nextbtn').disabled = (answers[cur] === undefined);
+  var container = document.getElementById('opts');
+  container.innerHTML = '';
+  for (var i = 0; i < q.o.length; i++) {
+    var btn = document.createElement('button');
+    btn.className = 'option' + (answers[cur] === i ? ' picked' : '');
+    btn.textContent = q.o[i].t;
+    btn.setAttribute('data-i', i);
+    btn.onclick = (function(idx){ return function(){ pick(idx); }; })(i);
+    container.appendChild(btn);
+  }
+}
+
+function pick(i) {
+  answers[cur] = i;
+  var btns = document.querySelectorAll('.option');
+  for (var b = 0; b < btns.length; b++) {
+    btns[b].classList.toggle('picked', parseInt(btns[b].getAttribute('data-i')) === i);
+  }
+  document.getElementById('nextbtn').disabled = false;
+}
+
+function goNext() {
+  if (answers[cur] === undefined) return;
+  cur++;
+  if (cur >= questions.length) { showPage('p-email'); }
+  else { renderQ(); }
+}
+
+function goBack() {
+  if (cur > 0) { cur--; renderQ(); }
+}
+
+var FLODESK_API_KEY = 'YOUR_FLODESK_API_KEY_HERE';
+var FLODESK_SEGMENTS = {
+  0: 'YOUR_FROZEN_CAPACITY_SEGMENT_ID_HERE',
+  1: 'YOUR_ACTIVATED_SURVIVAL_SEGMENT_ID_HERE',
+  2: 'YOUR_EXPANDING_CAPACITY_SEGMENT_ID_HERE'
+};
+
+function submitEmail() {
+  var name = document.getElementById('fname').value.trim();
+  var email = document.getElementById('femail').value.trim();
+  if (!email || email.indexOf('@') < 0) {
+    document.getElementById('femail').style.borderColor = 'var(--crimson)';
+    return;
+  }
+  var btn = document.querySelector('#p-email .full-btn');
+  btn.textContent = 'One moment...';
+  btn.disabled = true;
+
+  var scores = [0,0,0];
+  for (var i = 0; i < answers.length; i++) {
+    var s = questions[i].o[answers[i]].s;
+    scores[0] += s[0]; scores[1] += s[1]; scores[2] += s[2];
+  }
+  var top = 0;
+  for (var t = 1; t < scores.length; t++) {
+    if (scores[t] > scores[top]) top = t;
+  }
+
+  var segmentId = FLODESK_SEGMENTS[top];
+  var firstName = name ? name.split(' ')[0] : '';
+  var lastName = name && name.split(' ').length > 1 ? name.split(' ').slice(1).join(' ') : '';
+
+  fetch('https://api.flodesk.com/v1/subscribers', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(FLODESK_API_KEY + ':')
+    },
+    body: JSON.stringify({
+      email: email,
+      first_name: firstName,
+      last_name: lastName,
+      segments: segmentId ? [segmentId] : []
+    })
+  })
+  .then(function() { calcResults(name, top); })
+  .catch(function() { calcResults(name, top); });
+}
+
+function calcResults(name, top) {
+  if (top === undefined) {
+    var scores = [0,0,0];
+    for (var i = 0; i < answers.length; i++) {
+      var s = questions[i].o[answers[i]].s;
+      scores[0] += s[0]; scores[1] += s[1]; scores[2] += s[2];
+    }
+    top = 0;
+    for (var t = 1; t < scores.length; t++) {
+      if (scores[t] > scores[top]) top = t;
+    }
+  }
+  var r = results[top];
+  var firstName = name ? name.split(' ')[0] : '';
+
+  document.getElementById('r-greeting').textContent = firstName ? firstName + ', here is what your answers reveal.' : 'Here is what your answers reveal.';
+  document.getElementById('rname').textContent = r.name;
+  document.getElementById('rtagline').textContent = r.tagline;
+  document.getElementById('rintro').textContent = r.intro;
+  document.getElementById('r-origin').innerHTML = r.origin;
+  document.getElementById('r-pillarbody').innerHTML = r.pillarbody;
+  document.getElementById('rquote').textContent = r.quote;
+  document.getElementById('r-cost').innerHTML = r.cost;
+  document.getElementById('r-path-intro').innerHTML = r.pathIntro;
+
+  var pp = document.getElementById('rpillars');
+  pp.innerHTML = '';
+  for (var j = 0; j < r.pillars.length; j++) {
+    var d = document.createElement('div');
+    d.className = 'pillar';
+    d.innerHTML = '<p class="p-area">'+r.pillars[j].a+'</p><p class="p-state">'+r.pillars[j].s+'</p><p class="p-detail">'+r.pillars[j].d+'</p>';
+    pp.appendChild(d);
+  }
+
+  var sl = document.getElementById('r-steps');
+  sl.innerHTML = '';
+  for (var k = 0; k < r.steps.length; k++) {
+    var li = document.createElement('li');
+    li.innerHTML = '<span class="step-num">'+r.steps[k].n+'</span><span>'+r.steps[k].t+'</span>';
+    sl.appendChild(li);
+  }
+
+  var whatItems = r.offer.what.map(function(w){ return '<span>— ' + w + '</span>'; }).join('');
+  var upsellHtml = '';
+  if (r.offer.upsellTitle) {
+    upsellHtml = '<div class="o-upsell">' +
+      '<p class="o-upsell-label">Also recommended</p>' +
+      '<p class="o-upsell-title">'+r.offer.upsellTitle+'</p>' +
+      '<p class="o-upsell-desc">'+r.offer.upsellDesc+'</p>' +
+      '<button class="o-btn-secondary" onclick="window.open(\''+r.offer.upsellUrl+'\',\'_blank\')">'+r.offer.upsellCta+'</button>' +
+      '</div>';
+  }
+
+  document.getElementById('roffer').innerHTML =
+    '<p class="o-tag">'+r.offer.tag+'</p>'+
+    '<p class="o-title">'+r.offer.title+'</p>'+
+    '<p class="o-desc">'+r.offer.desc+'</p>'+
+    '<div class="o-what">'+whatItems+'</div>'+
+    '<button class="o-btn" onclick="window.open(\''+r.offer.url+'\',\'_blank\')">'+r.offer.cta+'</button>'+
+    upsellHtml+
+    '<p class="o-note">'+r.offer.note+'</p>';
+
+  showPage('p-results');
+}
+</script>
+</body>
+</html>
