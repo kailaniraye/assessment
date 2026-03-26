@@ -95,6 +95,7 @@ h2 { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia
 .o-upsell-desc { font-size: 13px; font-weight: 300; color: var(--charcoal); line-height: 1.75; margin-bottom: 14px; }
 .o-note { font-size: 12px; font-weight: 300; font-style: italic; color: var(--olive-gold); margin-top: 18px; line-height: 1.7; }
 </style>
+<script src="https://assets.flodesk.com/universal.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -387,9 +388,9 @@ function goBack() {
 
 var FLODESK_API_KEY = 'fd_key_821377b5eaf448999748fc961e4e940b.OmFo0SFWi6TOH8CLDfDNUCxBe3ckehQpktZA46x1R5SvrO6iUfUIrwHdgkPUfIMhSj7KMxZLid5oo0DKEriJN41aWaTMHhlDF5LZRnBAzjXOrnfFTPP49dG0L8iyqQQCGpqLgaoxBwbAFBc7KZxB7ZkzhxYBTzzWokY1Uf8bcSNXPhedr2PmHfEf0kbXuc5P';
 var FLODESK_SEGMENTS = {
-  0: '69c47d07875ed4130d230213',
-  1: '69c47d1e71357ef5c7375d17',
-  2: '69c47cf75becf9fa4c62101b'
+  0: '69c48eef875ed4130d230264',
+  1: '69c48ecdca8d0342d892ad99',
+  2: '69c48e83e4c7a4c2abf379b1'
 };
 
 function submitEmail() {
@@ -427,7 +428,7 @@ function submitEmail() {
       email: email,
       first_name: firstName,
       last_name: lastName,
-      segments: segmentId ? [segmentId] : []
+      segments: [segmentId]
     })
   })
   .then(function() { calcResults(name, top); })
