@@ -18,25 +18,40 @@ export default async function handler(req, res) {
   }
 
   const FLODESK_API_KEY = 'fd_key_821377b5eaf448999748fc961e4e940b.OmFo0SFWi6TOH8CLDfDNUCxBe3ckehQpktZA46x1R5SvrO6iUfUIrwHdgkPUfIMhSj7KMxZLid5oo0DKEriJN41aWaTMHhlDF5LZRnBAzjXOrnfFTPP49dG0L8iyqQQCGpqLgaoxBwbAFBc7KZxB7ZkzhxYBTzzWokY1Uf8bcSNXPhedr2PmHfEf0kbXuc5P';
+  const auth = 'Basic ' + Buffer.from(FLODESK_API_KEY + ':').toString('base64');
 
   try {
-    const response = await fetch('https://api.flodesk.com/v1/subscribers', {
+    const createRes = await fetch('https://api.flodesk.com/v1/subscribers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + Buffer.from(FLODESK_API_KEY + ':').toString('base64')
+        'Authorization': auth
       },
       body: JSON.stringify({
         email,
         first_name,
-        last_name,
-        segments: segment ? [segment] : []
+        last_name
       })
     });
 
-    const data = await response.json();
+    if (segment) {
+      const segmentRes = await fetch('https://api.flodesk.com/v1/subscribers/' + encodeURIComponent(email) + '/segments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': auth
+        },
+        body: JSON.stringify({
+          segment_ids: [segment]
+        })
+      });
+      const segData = await segmentRes.json();
+      return res.status(200).json({ success: true, subscriber: await createRes.json(), segmentResult: segData });
+    }
+
+    const data = await createRes.json();
     return res.status(200).json({ success: true, data });
   } catch (error) {
-    return res.status(500).json({ error: 'Subscription failed' });
+    return res.status(500).json({ error: 'Subscription failed', message: error.message });
   }
 }
