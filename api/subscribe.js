@@ -21,36 +21,27 @@ export default async function handler(req, res) {
   const auth = 'Basic ' + Buffer.from(FLODESK_API_KEY + ':').toString('base64');
 
   try {
-    const createRes = await fetch('https://api.flodesk.com/v1/subscribers', {
+    const body = {
+      email,
+      first_name: first_name || '',
+      last_name: last_name || ''
+    };
+
+    if (segment) {
+      body.segment_ids = [segment];
+    }
+
+    const response = await fetch('https://api.flodesk.com/v1/subscribers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': auth
       },
-      body: JSON.stringify({
-        email,
-        first_name,
-        last_name
-      })
+      body: JSON.stringify(body)
     });
 
-    if (segment) {
-      const segmentRes = await fetch('https://api.flodesk.com/v1/subscribers/' + encodeURIComponent(email) + '/segments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': auth
-        },
-        body: JSON.stringify({
-          segment_ids: [segment]
-        })
-      });
-      const segData = await segmentRes.json();
-      return res.status(200).json({ success: true, subscriber: await createRes.json(), segmentResult: segData });
-    }
-
-    const data = await createRes.json();
-    return res.status(200).json({ success: true, data });
+    const data = await response.json();
+    return res.status(200).json({ success: true, data, sentBody: body });
   } catch (error) {
     return res.status(500).json({ error: 'Subscription failed', message: error.message });
   }
