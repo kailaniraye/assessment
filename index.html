@@ -95,16 +95,15 @@ h2 { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia
 .o-upsell-desc { font-size: 13px; font-weight: 300; color: var(--charcoal); line-height: 1.75; margin-bottom: 14px; }
 .o-note { font-size: 12px; font-weight: 300; font-style: italic; color: var(--olive-gold); margin-top: 18px; line-height: 1.7; }
 </style>
-<script src="https://assets.flodesk.com/universal.js"></script>
 </head>
 <body>
 <div class="wrap">
 
 <div id="p-intro" class="page on">
   <div style="text-align:center;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid rgba(214,196,153,0.3);">
-  <p style="font-family:'Didot','GFS Didot','Bodoni MT','Playfair Display',Georgia,serif;font-size:24px;font-weight:400;letter-spacing:0.18em;color:#000000;margin:0 0 12px;">kailani raye / co.</p>
-  <p style="font-family:'Jost',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:#b09c3d;margin:0;">Nervous System Assessment</p>
-</div>
+    <p style="font-family:'Didot','GFS Didot','Bodoni MT','Playfair Display',Georgia,serif;font-size:24px;font-weight:400;letter-spacing:0.18em;color:#000000;margin:0 0 12px;">kailani raye / co.</p>
+    <p style="font-family:'Jost',sans-serif;font-size:11px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:#b09c3d;margin:0;">Nervous System Assessment</p>
+  </div>
   <h1>Your nervous system is already telling you something.</h1>
   <p class="sub">Most women spend years trying to think their way into a better life — better love, more money, stronger leadership. But the body has already decided what it will and will not hold.</p>
   <p class="sub">This assessment reveals which nervous system state is quietly running your life — and what it's costing your capacity to receive what you say you want.</p>
@@ -134,7 +133,8 @@ h2 { font-family: 'Didot', 'GFS Didot', 'Bodoni MT', 'Playfair Display', Georgia
 </div>
 
 <div id="p-results" class="page">
-  <p style="font-family:'Didot','GFS Didot','Bodoni MT','Playfair Display',Georgia,serif;font-size:18px;font-weight:400;letter-spacing:0.16em;color:#000000;margin:0 0 20px;display:block;">kailani raye / co.</p>
+  <p style="font-family:'Didot','GFS Didot','Bodoni MT','Playfair Display',Georgia,serif;font-size:18px;font-weight:400;letter-spacing:0.16em;color:#000000;margin:0 0 20px;">kailani raye / co.</p>
+  <p class="r-eyebrow">Your nervous system assessment</p>
   <p class="r-greeting" id="r-greeting"></p>
   <h2 class="r-name" id="rname"></h2>
   <p class="r-tagline" id="rtagline"></p>
@@ -334,6 +334,12 @@ var results = [
 var cur = 0;
 var answers = [];
 
+var FLODESK_SEGMENTS = {
+  0: '69c48eef875ed4130d230264',
+  1: '69c48ecdca8d0342d892ad99',
+  2: '69c48e83e4c7a4c2abf379b1'
+};
+
 function showPage(id) {
   var pages = document.querySelectorAll('.page');
   for (var i = 0; i < pages.length; i++) pages[i].classList.remove('on');
@@ -386,45 +392,6 @@ function goBack() {
   if (cur > 0) { cur--; renderQ(); }
 }
 
-var FLODESK_FORM_IDS = {
-  0: '69c48eef875ed4130d230264',
-  1: '69c48ecdca8d0342d892ad99',
-  2: '69c48e83e4c7a4c2abf379b1'
-};
-
-function submitToFlodesk(formId, email, firstName) {
-  return new Promise(function(resolve) {
-    var containerId = 'fd-hidden-' + formId;
-    var existing = document.getElementById(containerId);
-    if (existing) existing.remove();
-
-    var div = document.createElement('div');
-    div.id = containerId;
-    div.style.cssText = 'position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;';
-    document.body.appendChild(div);
-
-    window.fd('form', {
-      formId: formId,
-      containerEl: '#' + containerId,
-      onSubmitSuccess: function() { resolve(); }
-    });
-
-    setTimeout(function() {
-      var emailInput = div.querySelector('input[type="email"]');
-      var nameInput = div.querySelector('input[name="first_name"]');
-      var submitBtn = div.querySelector('button[type="submit"]');
-      if (emailInput) emailInput.value = email;
-      if (nameInput) nameInput.value = firstName;
-      if (submitBtn) {
-        submitBtn.click();
-        setTimeout(resolve, 1000);
-      } else {
-        resolve();
-      }
-    }, 1200);
-  });
-}
-
 function submitEmail() {
   var name = document.getElementById('fname').value.trim();
   var email = document.getElementById('femail').value.trim();
@@ -446,12 +413,28 @@ function submitEmail() {
     if (scores[t] > scores[top]) top = t;
   }
 
-  var formId = FLODESK_FORM_IDS[top];
+  var segment = FLODESK_SEGMENTS[top];
   var firstName = name ? name.split(' ')[0] : '';
+  var lastName = name && name.split(' ').length > 1 ? name.split(' ').slice(1).join(' ') : '';
 
-  submitToFlodesk(formId, email, firstName)
-    .then(function() { calcResults(name, top); })
-    .catch(function() { calcResults(name, top); });
+  fetch('/api/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email,
+      first_name: firstName,
+      last_name: lastName,
+      segment: segment
+    })
+  })
+  .then(function(res) {
+    console.log('Subscribe response:', res.status);
+    calcResults(name, top);
+  })
+  .catch(function(err) {
+    console.log('Subscribe error:', err);
+    calcResults(name, top);
+  });
 }
 
 function calcResults(name, top) {
